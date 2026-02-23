@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart - Urban GOAT</title>
+<style>
+body { font-family: Arial; background:#f3f3f3; margin:0; }
+header, footer { background:black; color:white; padding:15px; text-align:center; display:flex; align-items:center; justify-content:center; }
+header img.logo { height:50px; margin-right:15px; }
+.container { max-width:600px; margin:40px auto; background:white; padding:20px; border-radius:10px; text-align:center; }
+img.product-img { width:140px; border-radius:10px; margin-bottom:10px; }
+button { background:black; color:white; padding:10px; border:none; border-radius:10px; width:100%; margin-top:10px; cursor:pointer; }
+.empty { color:gray; }
+</style>
+</head>
+<body>
+<header>
+<img src="logo.png" alt="Urban GOAT Logo" class="logo">
+<h2>Urban GOAT Cart</h2>
+</header>
+<div class="container">
+<div id="cartContent"></div>
+<button id="checkoutBtn" onclick="goCheckout()" style="display:none;">Proceed to Checkout</button>
+</div>
+<footer>
+© 2026 Urban GOAT Sneakers
+</footer>
+<script>
+// Add to Cart functions for all sneakers
+function addToCart(name, price, image, sizeId) {
+    const size = document.getElementById(sizeId).value;
+    localStorage.setItem("productName", name);
+    localStorage.setItem("productPrice", price);
+    localStorage.setItem("productImage", image);
+    localStorage.setItem("productSize", size);
+    window.location.href = "cart.html";
+}
+
+// Retrieve product info from localStorage
+const name = localStorage.getItem("productName");
+const price = localStorage.getItem("productPrice");
+const image = localStorage.getItem("productImage");
+const size = localStorage.getItem("productSize");
+const cartDiv = document.getElementById("cartContent");
+const checkoutBtn = document.getElementById("checkoutBtn");
+
+if (!name || !price || !image || !size) {
+    cartDiv.innerHTML = "<p class='empty'>Your cart is empty.</p>";
+} else {
+    const delivery = 70;
+    const total = parseInt(price) + delivery;
+
+    cartDiv.innerHTML = `
+        <img src="${image}" alt="${name}" class="product-img">
+        <h3>${name}</h3>
+        <p><strong>Size:</strong> ${size}</p>
+        <p><strong>Price:</strong> R${price}</p>
+        <p><strong>Delivery:</strong> R${delivery} (7–9 days)</p>
+        <h3>Total: R${total}</h3>
+    `;
+
+    checkoutBtn.style.display = "block";
+}
+
+function goCheckout() {
+    window.location.href = "checkout.html";
+}
+</script>
+</body>
+</html>

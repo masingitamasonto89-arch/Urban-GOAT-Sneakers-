@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart - Urban GOAT</title>
+<style>
+body { font-family: Arial; background:#f3f3f3; margin:0; }
+header, footer { background:black; color:white; padding:15px; text-align:center; }
+.container { max-width:600px; margin:40px auto; background:white; padding:20px; border-radius:10px; text-align:center; }
+img { width:140px; border-radius:10px; margin-bottom:10px; }
+button { background:black; color:white; padding:10px; border:none; border-radius:10px; width:100%; margin-top:10px; cursor:pointer; }
+.empty { color:gray; }
+</style>
+</head>
+<body>
+<header>
+<img src="logo.png" alt="Urban GOAT Logo">
+<h2>Urban GOAT Cart</h2>
+</header>
+<div class="container">
+<div id="cartContent"></div>
+<button id="checkoutBtn" onclick="goCheckout()" style="display:none;">Proceed to Checkout</button>
+</div>
+<footer>
+© 2026 Urban GOAT Sneakers
+</footer>
+<script>
+// Retrieve product info from localStorage
+const name = localStorage.getItem("productName");
+const price = localStorage.getItem("productPrice");
+const image = localStorage.getItem("productImage");
+const size = localStorage.getItem("productSize");const cartDiv = document.getElementById("cartContent"); const checkoutBtn = document.getElementById("checkoutBtn");
+
+if (!name || !price || !image || !size) { cartDiv.innerHTML = "<p class='empty'>Your cart is empty.</p>"; } else { const delivery = 70; const total = parseInt(price) + delivery;
+
+// Display product using local image filename
+cartDiv.innerHTML = `
+    <img src="${image}" alt="${name}">
+    <h3>${name}</h3>
+    <p><strong>Size:</strong> ${size}</p>
+    <p><strong>Price:</strong> R${price}</p>
+    <p><strong>Delivery:</strong> R${delivery} (7–9 days)</p>
+    <h3>Total: R${total}</h3>
+`;
+
+checkoutBtn.style.display = "block";
+
+}
+
+function goCheckout() { window.location.href = "checkout.html"; } </script>
+
+</body>
+</html>
